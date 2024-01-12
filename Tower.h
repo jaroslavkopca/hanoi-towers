@@ -4,8 +4,9 @@
 
 #ifndef SEMESTRALKA_TOWER_H
 #define SEMESTRALKA_TOWER_H
+
 #include "Disk.h"
-#include "stack"
+
 
 /**
  * @class Tower
@@ -21,10 +22,12 @@ public:
     Disk removeDisk();
     int getNumberOfDisks() const;
     bool isEmpty() const;
-    std::stack<Disk> getDisks() const;
+    const std::stack<Disk>& getDisks() const;
 
 
     const Disk &getTop();
+
+    const Disk & getDiskAt(int i) const;
 };
 
 

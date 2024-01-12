@@ -6,6 +6,7 @@
 
 
 
+
 Game::Game(){
     // Initialize the game, for example, by asking the number of disks
 //    std::cout << "Enter the number of disks: ";
@@ -18,20 +19,33 @@ Game::Game(){
 }
 
 void Game::startGame() {
-//     Main game loop
-//    while (!isGameWon()) {
-        int from, to;
-        std::cout << "Enter the tower to move from and to (e.g., 1 2): ";
-        std::cin >> from >> to;
+    bool gameOver = false;
 
-        if (isValidMove(from, to)) {
-            moveDisc(from, to);
+//    while (!gameOver) {
+        // Handle player input
+        // For example, you can ask the player for move input (fromTower and toTower)
+
+        int fromTower, toTower;
+        std::cout << "Enter move (fromTower toTower): ";
+        std::cin >> fromTower >> toTower;
+
+        // Check if the move is valid
+        if (isValidMove(fromTower, toTower)) {
+            // Make the move
+            moveDisc(fromTower, toTower);
+
+            // Check for win condition
+            if (isGameWon()) {
+                std::cout << "Congratulations! You won!" << std::endl;
+                gameOver = true;
+            }
         } else {
             std::cout << "Invalid move. Try again." << std::endl;
         }
+
 //    }
 
-//    std::cout << "Congratulations! You have solved the Tower of Hanoi!" << std::endl;
+    // Display game over message and final results
 }
 
 
@@ -68,7 +82,7 @@ bool Game::isValidMove(int fromTower, int toTower) const {
     return true;
 }
 
-std::vector<Tower> Game::getTowers(){
+const std::vector<Tower>& Game::getTowers() const {
     return towers;
 }
 
@@ -76,16 +90,25 @@ int Game::getDiskPositionInTower(const Disk& targetDisk, int towerIndex) {
     const std::stack<Disk>& towerStack = towers[towerIndex].getDisks();
     std::stack<Disk> tempStack = towerStack; // Copy the tower's stack
 
-    int position = 0;
+    int position = towers[towerIndex].getNumberOfDisks();
     while (!tempStack.empty()) {
         const Disk& currentDisk = tempStack.top();
         if (currentDisk == targetDisk) {
             return position;
         }
         tempStack.pop();
-        position++;
+        position--;
     }
 
     return -1; // Return -1 if the disk is not found in the tower
+}
+
+void Game::setupGame(int i) {
+
+
+}
+
+void Game::resetGame() {
+
 }
 

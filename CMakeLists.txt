@@ -11,7 +11,8 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
 add_executable(Semestralka main.cpp Tower.cpp Disk.cpp
-        GameView.cpp)
+        GameView.cpp
+        GameController.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
 

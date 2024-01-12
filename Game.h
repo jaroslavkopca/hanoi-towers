@@ -5,8 +5,11 @@
 #ifndef SEMESTRALKA_GAME_H
 #define SEMESTRALKA_GAME_H
 
+
 #include "Tower.h"
-#include "vector"
+
+
+
 /**
  * @class Game
  * @brief Represents the game of Tower of Hanoi.
@@ -16,14 +19,13 @@
  */
 class Game {
 private:
-
     std::vector<Tower> towers;
     int numberOfDisc;
 
 public:
     explicit  Game();
 
-    void startGame();
+
 
     void moveDisc(int fromTower, int toTower);
 
@@ -32,10 +34,16 @@ public:
 
     bool isGameWon() const;
 
-    std::vector<Tower> getTowers();
+    const std::vector<Tower>& getTowers() const;
 
 
     int getDiskPositionInTower(const Disk &disk, int i);
+
+    void startGame();
+
+    void setupGame(int i);
+
+    void resetGame();
 };
 
 

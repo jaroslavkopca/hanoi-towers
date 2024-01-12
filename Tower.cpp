@@ -37,10 +37,20 @@ bool Tower::isEmpty() const {
     return disks.empty();
 }
 
-std::stack<Disk> Tower::getDisks() const {
+const std::stack<Disk>& Tower::getDisks() const {
     return disks;
 }
 
 const Disk &Tower::getTop() {
     return disks.top();
+}
+
+const Disk & Tower::getDiskAt(int i) const {
+    std::stack<Disk> tempStack = disks;
+
+    for (int j = 0; j < i; ++j) {
+        tempStack.pop();
+    }
+
+    return tempStack.top();
 }
