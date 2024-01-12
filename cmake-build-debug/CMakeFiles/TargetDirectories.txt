@@ -1,3 +1,0 @@
-/mnt/c/Users/jarek/CLionProjects/Semestralka/cmake-build-debug/CMakeFiles/Semestralka.dir
-/mnt/c/Users/jarek/CLionProjects/Semestralka/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/c/Users/jarek/CLionProjects/Semestralka/cmake-build-debug/CMakeFiles/rebuild_cache.dir
