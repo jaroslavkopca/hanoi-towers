@@ -1,22 +1,23 @@
-#include <iostream>
-#include <fstream>
 #include "Game.cpp"
 #include "GameView.h"
+#include "GameController.h"
 
 
 
 int main(int argc, char* argv[]) {
-
-    std::clog << "Hello, World!" << std::endl;
+    std::ofstream logFile("logfile.txt", std::ios::app);
+    std::cout.rdbuf(logFile.rdbuf());
     Game game;
     GameView view(game);
-    std::cout << "Hello, World!" << std::endl;
+    GameController gameController(game,view);
+    std::cout << "Zacatek" << std::endl;
     // Main loop (simplified)
     bool running = true;
     while (running) {
         // Handle events
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
+            gameController.handleUserInput(event);
             if (event.type == SDL_QUIT) {
                 running = false;
             }
@@ -25,7 +26,7 @@ int main(int argc, char* argv[]) {
         // Render game
         view.render();
 //        std::cout << "Jsme tu" << std::endl;
-        game.startGame();
+//        game.startGame();
     }
 
     return 0;

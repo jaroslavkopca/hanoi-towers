@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Disk.h"
 #include "Tower.h"
+#include "GameView.h"
 
 
 
@@ -19,33 +20,45 @@ Game::Game(){
 }
 
 void Game::startGame() {
-    bool gameOver = false;
-
+//    bool gameOver = false;
+//
+//    SDL_Event e;
 //    while (!gameOver) {
-        // Handle player input
-        // For example, you can ask the player for move input (fromTower and toTower)
-
-        int fromTower, toTower;
-        std::cout << "Enter move (fromTower toTower): ";
-        std::cin >> fromTower >> toTower;
-
-        // Check if the move is valid
-        if (isValidMove(fromTower, toTower)) {
-            // Make the move
-            moveDisc(fromTower, toTower);
-
-            // Check for win condition
-            if (isGameWon()) {
-                std::cout << "Congratulations! You won!" << std::endl;
-                gameOver = true;
-            }
-        } else {
-            std::cout << "Invalid move. Try again." << std::endl;
-        }
-
+//        while (SDL_PollEvent(&e) != 0) {
+//            // Check for quit event
+//            if (e.type == SDL_QUIT) {
+//                gameOver = true;
+//            }
+//
+//            // Handle other events like mouse clicks
+//            if (e.type == SDL_MOUSEBUTTONDOWN) {
+//                // Determine which tower or disk was clicked
+//                // This method depends on how you've implemented your GameView
+////                int clickedTower = gameView.getTowerClicked(e.button.x, e.button.y);
+//
+//                // If a tower is clicked, determine the move
+//                if (clickedTower != -1) {
+//                    // Logic to determine fromTower and toTower based on user's click
+//                    int fromTower, toTower;
+//                    // ... Your logic to set fromTower and toTower based on click ...
+//
+//                    if (isValidMove(fromTower, toTower)) {
+//                        moveDisc(fromTower, toTower);
+//
+//                        if (isGameWon()) {
+//                            std::cout << "Congratulations! You won!" << std::endl;
+//                            gameOver = true;
+//                        }
+//                    } else {
+//                        std::cout << "Invalid move. Try again." << std::endl;
+//                    }
+//                }
+//            }
+//        }
+//
+//        // Render game state
+////        gameView.render();
 //    }
-
-    // Display game over message and final results
 }
 
 
@@ -55,8 +68,8 @@ void Game::startGame() {
 
 void Game::moveDisc(int fromTower, int toTower) {
     // Assuming tower indices are 1-based in user input and 0-based internally
-    Disk disc = towers[fromTower - 1].removeDisk();
-    towers[toTower - 1].addDisk(disc);
+    Disk disc = towers[fromTower].removeDisk();
+    towers[toTower].addDisk(disc);
 }
 
 bool Game::isGameWon() const {
@@ -66,16 +79,16 @@ bool Game::isGameWon() const {
 
 bool Game::isValidMove(int fromTower, int toTower) const {
     // Check if the move is valid (e.g., no disk is moved onto a smaller disk)
-    if (fromTower < 1 || fromTower > 3 || toTower < 1 || toTower > 3 || fromTower == toTower) {
+    if (fromTower < 0 || fromTower > 2 || toTower < 0 || toTower > 2 || fromTower == toTower) {
         return false;
     }
 
-    if (towers[fromTower - 1].isEmpty()) {
+    if (towers[fromTower ].isEmpty()) {
         return false;
     }
 
-    if (!towers[toTower - 1].isEmpty() &&
-        towers[toTower - 1].peekDisk().getSize() < towers[fromTower - 1].peekDisk().getSize()) {
+    if (!towers[toTower ].isEmpty() &&
+        towers[toTower].peekDisk().getSize() < towers[fromTower].peekDisk().getSize()) {
         return false;
     }
 

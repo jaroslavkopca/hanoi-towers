@@ -5,6 +5,8 @@
 #ifndef SEMESTRALKA_DISK_H
 #define SEMESTRALKA_DISK_H
 
+#include <iostream>
+#include <fstream>
 #include <SDL.h>
 #include <vector>
 #include <stack>
