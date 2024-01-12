@@ -14,6 +14,8 @@ private:
     SDL_Renderer* renderer;
 
     std::vector<SDL_Rect> buttons;
+    SDL_Texture* restartTextTexture;
+    SDL_Texture* solveTextTexture;
 
 public:
     enum ButtonType { RESTART, SOLVE, NUM_BUTTONS };

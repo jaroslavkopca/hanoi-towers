@@ -5,6 +5,7 @@
 #include "GameView.h"
 #include <SDL.h>
 #include "iostream"
+#include <SDL_ttf.h>
 
 GameView::GameView(Game &game) : game(game) {
     // Initialize SDL and create window and renderer
@@ -25,6 +26,8 @@ GameView::GameView(Game &game) : game(game) {
 }
 
 GameView::~GameView() {
+    if (restartTextTexture) SDL_DestroyTexture(restartTextTexture);
+    if (solveTextTexture) SDL_DestroyTexture(solveTextTexture);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
     SDL_Quit();
@@ -121,33 +124,80 @@ void GameView::initializeButtons() {
     int buttonWidth = 100;
     int buttonHeight = 50;
     int yPos = 10; // Position at the top of the window
+    int xPos = 800 / 2 - (buttonWidth * NUM_BUTTONS) / 2; // Center buttons horizontally
 
     // Initialize button rectangles
     buttons.resize(NUM_BUTTONS);
-    buttons[RESTART] = {10, yPos, buttonWidth, buttonHeight}; // Restart button
-    buttons[SOLVE] = {120, yPos, buttonWidth, buttonHeight}; // Solve button
+    buttons[RESTART] = {xPos, yPos, buttonWidth, buttonHeight}; // Restart button
+    buttons[SOLVE] = {xPos + buttonWidth + 10, yPos, buttonWidth, buttonHeight}; // Solve button
+
+    // Initialize SDL_ttf for text rendering
+    if (TTF_Init() == -1) {
+        std::cerr << "SDL_ttf could not initialize! TTF_Error: " << TTF_GetError() << std::endl;
+    }
+
+    // Load font
+    TTF_Font* font = TTF_OpenFont("fonts/Pixellettersfull.ttf", 24);
+    if (font == nullptr) {
+        std::cerr << "Failed to load font! TTF_Error: " << TTF_GetError() << std::endl;
+    }
+
+    // Set text color as white
+    SDL_Color textColor = {255, 255, 255};
+
+    // Create surfaces for button text
+    SDL_Surface* restartSurface = TTF_RenderText_Solid(font, "Restart", textColor);
+    SDL_Surface* solveSurface = TTF_RenderText_Solid(font, "Solve", textColor);
+
+    // Create textures from surfaces
+    restartTextTexture = SDL_CreateTextureFromSurface(renderer, restartSurface);
+    solveTextTexture = SDL_CreateTextureFromSurface(renderer, solveSurface);
+
+    // Clean up surfaces
+    SDL_FreeSurface(restartSurface);
+    SDL_FreeSurface(solveSurface);
+
+    // Close the font after use
+    TTF_CloseFont(font);
 }
 
 void GameView::renderButtons() {
-    for (const auto& button : buttons) {
-        if (SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255) < 0) {
-            // handle error
-        }
-        if (SDL_RenderFillRect(renderer, &button) < 0) {
-            // handle error
-        }
+    for (size_t i = 0; i < buttons.size(); ++i) {
+        // Draw button rectangle
+        SDL_SetRenderDrawColor(renderer, 80, 80, 80, 255); // Darker button color
+        SDL_RenderFillRect(renderer, &buttons[i]);
+
+        // Draw button border for a "button-like" appearance
+        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255); // Light grey for the border
+        SDL_RenderDrawRect(renderer, &buttons[i]);
+
+        // Render text texture on the button
+        SDL_Texture* textTexture = (i == RESTART) ? restartTextTexture : solveTextTexture;
+        int textWidth, textHeight;
+        SDL_QueryTexture(textTexture, NULL, NULL, &textWidth, &textHeight);
+        SDL_Rect textRect = {buttons[i].x + (buttons[i].w - textWidth) / 2, buttons[i].y + (buttons[i].h - textHeight) / 2, textWidth, textHeight};
+        SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     }
 }
 
-
 GameView::ButtonType GameView::getButtonClicked(int x, int y) {
-    for (int i = 0; i < NUM_BUTTONS; ++i) {
-        if (x >= buttons[i].x && x <= buttons[i].x + buttons[i].w &&
-            y >= buttons[i].y && y <= buttons[i].y + buttons[i].h) {
-            return static_cast<ButtonType>(i);
-        }
+    for (size_t i = 0; i < buttons.size(); ++i) {
+        // Draw button rectangle
+        SDL_SetRenderDrawColor(renderer, 80, 80, 80, 255); // Darker button color
+        SDL_RenderFillRect(renderer, &buttons[i]);
+
+        // Draw button border for a "button-like" appearance
+        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255); // Light grey for the border
+        SDL_RenderDrawRect(renderer, &buttons[i]);
+
+        // Render text texture on the button
+        SDL_Texture* textTexture = (i == RESTART) ? restartTextTexture : solveTextTexture;
+        int textWidth, textHeight;
+        SDL_QueryTexture(textTexture, NULL, NULL, &textWidth, &textHeight);
+        SDL_Rect textRect = {buttons[i].x + (buttons[i].w - textWidth) / 2, buttons[i].y + (buttons[i].h - textHeight) / 2, textWidth, textHeight};
+        SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     }
-    return NUM_BUTTONS; // No button clicked
+    return NUM_BUTTONS;
 }
 
 // handle possible division by zero

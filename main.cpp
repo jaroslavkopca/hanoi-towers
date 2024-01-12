@@ -7,6 +7,7 @@
 int main(int argc, char* argv[]) {
     std::ofstream logFile("logfile.txt", std::ios::app);
     std::cout.rdbuf(logFile.rdbuf());
+    std::cerr.rdbuf(logFile.rdbuf());
     Game game;
     GameView view(game);
     GameController gameController(game,view);
