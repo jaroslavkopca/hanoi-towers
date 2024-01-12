@@ -19,11 +19,12 @@ private:
     int selectedTower;
 
 public:
+
     GameController(Game& game, GameView& view);
     void run();
 
     // Methods for handling user inputs and game controls
-    void moveDisk(int fromTower, int toTower);
+    bool moveDisk(int fromTower, int toTower);
     void changeNumberOfDisks(int newNumber);
     void restartGame();
     void solveGame();
