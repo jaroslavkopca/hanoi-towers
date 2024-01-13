@@ -20,6 +20,7 @@ private:
 
 public:
 
+
     GameController(Game &game, GameView &view);
 
     void run();
@@ -37,6 +38,11 @@ public:
     void handleUserInput(SDL_Event &e);
 
     void solveGame(int numberOfDisks, int sourceTower, int destinationTower, int auxiliaryTower);
+
+    Disk removeDisk(int tower);
+
+
+    void returnDisk(int tower, Disk disk);
 };
 
 #endif //SEMESTRALKA_GAMECONTROLLER_H
