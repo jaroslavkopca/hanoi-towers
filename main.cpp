@@ -11,8 +11,7 @@ int main(int argc, char* argv[]) {
     Game game;
     GameView view(game);
     GameController gameController(game,view);
-    std::cout << "Zacatek" << std::endl;
-    // Main loop (simplified)
+
     bool running = true;
     while (running) {
         // Handle events
@@ -25,9 +24,6 @@ int main(int argc, char* argv[]) {
         }
         view.render();
 
-        // Render game
-//        std::cout << "Jsme tu" << std::endl;
-//        game.startGame();
     }
 
     return 0;

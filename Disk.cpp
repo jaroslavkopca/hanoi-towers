@@ -14,7 +14,6 @@ SDL_Color Disk::getColor() const {
     return color;
 }
 
-bool Disk::operator==(const Disk& other) const {
-    // Compare the attributes of 'this' Disk and 'other' Disk
-    return size == other.size; // Adjust the comparison based on your criteria
+bool Disk::operator==(const Disk &other) const {
+    return size == other.size;
 }

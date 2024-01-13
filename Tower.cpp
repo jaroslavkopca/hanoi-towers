@@ -48,17 +48,11 @@ const Disk & Tower::getTop() const {
 const Disk& Tower::getDiskAt(int i) const {
     std::stack<Disk> tempStack = disks;
 
-    // Ensure that 'i' is within a valid range
     if (i >= 0 && i < tempStack.size()) {
-        // Pop elements from the tempStack until we reach the desired index 'i'
         for (int j = 0; j < i; ++j) {
             tempStack.pop();
         }
 
-        // Return a reference to the disk at index 'i' in the original stack
         return tempStack.top();
-    } else {
-        // Handle the case where 'i' is out of range, e.g., by returning a default Disk or throwing an exception
-        throw std::out_of_range("Index out of range");
     }
 }

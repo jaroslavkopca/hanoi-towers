@@ -7,23 +7,9 @@
 
 
 GameController::GameController(Game &game, GameView &view)
-        : game(game), gameView(view), isRunning(true), selectedDisk(-1), selectedTower(-1) {}
+        : game(game), gameView(view){}
 
 void GameController::run() {
-    SDL_Event e;
-    while (isRunning) {
-        while (SDL_PollEvent(&e) != 0) {
-            // Check for quit event
-            if (e.type == SDL_QUIT) {
-                isRunning = false;
-            }
-
-            // Additional event handling
-            handleUserInput(e);
-        }
-
-        gameView.render(); // Render the game state
-    }
 }
 
 void GameController::handleUserInput(SDL_Event &e) {
@@ -42,9 +28,6 @@ void GameController::handleUserInput(SDL_Event &e) {
         }
     }
 
-//    if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT && gameView.isDiskGrabbed) {
-//        gameView.renderDiskWhenGrabbed();
-//    }
 
     if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_LEFT && gameView.isDiskGrabbed) {
         // Check if a tower was clicked
@@ -72,14 +55,14 @@ void GameController::handleUserInput(SDL_Event &e) {
             switch (clickedButton) {
                 case GameView::RESTART:
                     restartGame();
-                    std::cout << "RESTAAAAAAAAAAAART" << std::endl;
+                    std::cout << "RESTART" << std::endl;
                     break;
                 case GameView::SOLVE:
                     if (!game.isGameWon()) {
                         restartGame();
                         solveGame(game.getNumberOfDisks(), 0, 2, 1);
                     }
-                    std::cout << "SOLVEEEEEEEEEEEEEEEEEE" << std::endl;
+                    std::cout << "SOLVE" << std::endl;
                     break;
                 case GameView::INCREASE_DISKS:
                     game.setNumberOfDisks(game.getNumberOfDisks() + 1);
@@ -88,6 +71,14 @@ void GameController::handleUserInput(SDL_Event &e) {
                 case GameView::DECREASE_DISKS:
                     game.setNumberOfDisks(game.getNumberOfDisks() - 1);
                     std::cout << "DECR" << std::endl;
+                    break;
+                case GameView::EXIT:
+                    SDL_Event customEvent;
+                    customEvent.type = SDL_QUIT;
+
+                    SDL_PushEvent(&customEvent); // Push the custom event to the event queue
+
+                    std::cout << "EXIT" << std::endl;
                     break;
             }
         }
@@ -131,8 +122,6 @@ void GameController::solveGame(int numberOfDisks, int sourceTower, int destinati
 
 
 void GameController::dragDisk(int diskId, int targetTower) {
-    // Implement logic for dragging a disk to a new tower
-    // This will likely involve game and view updates
 }
 
 Disk GameController::removeDisk(int tower) {

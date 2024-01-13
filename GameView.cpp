@@ -33,9 +33,8 @@ GameView::~GameView() {
     SDL_Quit();
 }
 
-// Initialize towers and disks
+
 void GameView::renderTowers() {
-    // Render towers with a more aesthetic look
     for (int i = 0; i < game.getTowers().size(); ++i) {
         SDL_Rect towerRect = calculateTowerRect(i);
         fillRectWithGradient(renderer, &towerRect, SDL_Color{50, 50, 50, 255}, SDL_Color{100, 100, 100, 255});
@@ -89,14 +88,11 @@ void GameView::renderDisks() {
 void GameView::renderDiskWhenGrabbed(){
     int mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
-    // Check if a disk is grabbed and render it at the current mouse position
     if (isDiskGrabbed) {
         Disk grabbedDisk = game.getTowers()[grabbedTower].getTop();
         SDL_Color diskColor = grabbedDisk.getColor();
         SDL_Rect diskRect = calculateDiskRectAtMouse(grabbedDisk, mouseX, mouseY);
 
-        // Render the grabbed disk at the current mouse position
-        // Use the current mouse position as (x, y) in diskRect
         SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
         SDL_RenderFillRect(renderer, &diskRect);
     }
@@ -108,7 +104,6 @@ void GameView::renderDiskWhenGrabbed(){
 
 void GameView::render() {
     if (renderer) {
-        // Set a darker background color
         if (SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255) < 0) {
             // handle error
         }
@@ -135,7 +130,7 @@ void GameView::render() {
 
 
 void GameView::renderText(SDL_Renderer *renderer, const char *text, SDL_Color textColor, SDL_Rect position) {
-    // Load a font (you should do this initialization elsewhere)
+
     TTF_Font *font = TTF_OpenFont("fonts/Pixellettersfull.ttf", 24);
     if (font == nullptr) {
         std::cerr << "Failed to load font! TTF_Error: " << TTF_GetError() << std::endl;
@@ -180,13 +175,16 @@ void GameView::renderTextAndUI() {
 
     std::string disksText = "Disks: " + std::to_string(game.getNumberOfDisks());
     renderText(renderer, disksText.c_str(), textColor, {10, 10, 100, 30}); // Position text at the bottom left corner
+
+    if  (game.isGameWon()){
+        std::string winText = "Game WON ! ";
+        renderText(renderer, winText.c_str(), textColor, {550, 550, 100, 30}); // Position text at the bottom right corner
+    }
 }
 
 
 void GameView::renderStartScreen() {
     SDL_Init(TTF_Init());
-    // Clear the renderer
-//    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
     // Create a "Start" button
@@ -267,7 +265,6 @@ std::pair<int, int> GameView::getDiskClicked(int x, int y) {
             }
         }
     }
-//    std::cout << "No disk clicked" << std::endl;
     return {-1, -1}; // No disk clicked
 }
 
@@ -276,7 +273,7 @@ void GameView::initializeButtons() {
     int buttonWidth = 100;
     int buttonHeight = 50;
     int yPos = 10; // Position at the top of the window
-    int xPos = 1200 / 2 - (buttonWidth * NUM_BUTTONS) / 2; // Center buttons horizontally
+    int xPos = 1200 / 2 - (buttonWidth * (NUM_BUTTONS - 1)) / 2; // Center buttons horizontally
 
     // Initialize button rectangles
     buttons.resize(NUM_BUTTONS);
@@ -284,6 +281,7 @@ void GameView::initializeButtons() {
     buttons[SOLVE] = {xPos + buttonWidth + 10, yPos, buttonWidth, buttonHeight}; // Solve button
     buttons[INCREASE_DISKS] = {xPos - buttonWidth - 10, yPos, buttonWidth, buttonHeight}; // Up button
     buttons[DECREASE_DISKS] = {xPos - buttonWidth * 2 - 20, yPos, buttonWidth, buttonHeight}; // Down button
+    buttons[EXIT] = {650, 500, buttonWidth, buttonHeight}; // Exit button
 
     SDL_Init(TTF_Init());
     // Initialize SDL_ttf for text rendering
@@ -305,18 +303,22 @@ void GameView::initializeButtons() {
     SDL_Surface *solveSurface = TTF_RenderText_Solid(font, "Solve", textColor);
     SDL_Surface *increaseSurface = TTF_RenderText_Solid(font, "Up", textColor);
     SDL_Surface *decreaseSurface = TTF_RenderText_Solid(font, "Down", textColor);
+    SDL_Surface *exitSurface = TTF_RenderText_Solid(font, "EXIT", textColor);
+
 
     // Create textures from surfaces
     restartTextTexture = SDL_CreateTextureFromSurface(renderer, restartSurface);
     solveTextTexture = SDL_CreateTextureFromSurface(renderer, solveSurface);
     increaseTextTexture = SDL_CreateTextureFromSurface(renderer, increaseSurface);
     decreaseTextTexture = SDL_CreateTextureFromSurface(renderer, decreaseSurface);
+    exitTextTexture = SDL_CreateTextureFromSurface(renderer, exitSurface);
 
     // Clean up surfaces
     SDL_FreeSurface(restartSurface);
     SDL_FreeSurface(solveSurface);
     SDL_FreeSurface(increaseSurface);
     SDL_FreeSurface(decreaseSurface);
+    SDL_FreeSurface(exitSurface);
 
     // Close the font after use
     TTF_CloseFont(font);
@@ -345,6 +347,9 @@ void GameView::renderButtons() {
                 break;
             case DECREASE_DISKS:
                 textTexture = decreaseTextTexture;
+                break;
+            case EXIT:
+                textTexture = exitTextTexture;
                 break;
         }
         int textWidth, textHeight;

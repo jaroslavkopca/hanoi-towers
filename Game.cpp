@@ -19,13 +19,11 @@ void Game::startGame() {
 
 
 void Game::moveDisc(int fromTower, int toTower) {
-    // Assuming tower indices are 1-based in user input and 0-based internally
     Disk disc = towers[fromTower].removeDisk();
     towers[toTower].addDisk(disc);
 }
 
 bool Game::isGameWon() const {
-    // Game is won if all disks are on the last tower
     return towers[2].getNumberOfDisks() == numberOfDisc;
 }
 

@@ -13,13 +13,7 @@ private:
     Game &game;
     GameView &gameView;
 
-    // Additional attributes for user input and game state
-    bool isRunning;
-    int selectedDisk;
-    int selectedTower;
-
 public:
-
 
     GameController(Game &game, GameView &view);
 

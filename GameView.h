@@ -18,6 +18,7 @@ private:
     SDL_Texture *solveTextTexture;
     SDL_Texture *increaseTextTexture;
     SDL_Texture *decreaseTextTexture;
+    SDL_Texture *exitTextTexture;
     SDL_Rect *movesDisplayRect;
     SDL_Texture *arrowUpTexture;
     SDL_Texture *arrowDownTexture;
@@ -35,7 +36,7 @@ public:
     int grabbedDiskIndex = -1; // Index of the grabbed disk in its tower
 
     enum ButtonType {
-        RESTART, SOLVE, INCREASE_DISKS, DECREASE_DISKS, NUM_BUTTONS, START
+        RESTART, SOLVE, INCREASE_DISKS, DECREASE_DISKS,EXIT , NUM_BUTTONS, START
     };
 
     GameView(Game &game);
