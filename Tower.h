@@ -25,7 +25,7 @@ public:
     const std::stack<Disk>& getDisks() const;
 
 
-    const Disk &getTop();
+    const Disk & getTop() const;
 
     const Disk & getDiskAt(int i) const;
 };

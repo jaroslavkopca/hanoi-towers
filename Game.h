@@ -64,6 +64,10 @@ public:
     int getNumberOfDisks();
 
     void setNumberOfDisks(int i);
+
+    Disk removeDisk(int i);
+
+    void returnDisk(int i, Disk disk);
 };
 
 

@@ -41,7 +41,7 @@ const std::stack<Disk>& Tower::getDisks() const {
     return disks;
 }
 
-const Disk &Tower::getTop() {
+const Disk & Tower::getTop() const {
     return disks.top();
 }
 

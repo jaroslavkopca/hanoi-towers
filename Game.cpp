@@ -80,7 +80,8 @@ int Game::getNumberOfMoves() {
 }
 
 int Game::getLargestDiskSize() {
-    return numberOfDisc * 10;
+    largestDiskSize = numberOfDisc * 10;
+    return largestDiskSize;
 }
 
 bool Game::isGameStarted(){
@@ -106,6 +107,14 @@ void Game::setNumberOfDisks(int numberOfDisks) {
         // Update the number of disks
         numberOfDisc = numberOfDisks;
     }
+}
+
+Disk Game::removeDisk(int i) {
+    towers[i].removeDisk();
+}
+
+void Game::returnDisk(int i, Disk disk) {
+    towers[i].addDisk(disk);
 }
 
 
