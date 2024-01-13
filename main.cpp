@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) {
                 running = false;
             }
         }
+        view.render();
 
         // Render game
-        view.render();
 //        std::cout << "Jsme tu" << std::endl;
 //        game.startGame();
     }

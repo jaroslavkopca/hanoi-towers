@@ -7,6 +7,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules)
 # Set the path to the SDL2 and SDL2_ttf libraries
 set(SDL2_PATH "libs/SDL2/x86_64-w64-mingw32")
 set(SDL2_TTF_PATH "libs/SDL2_ttf/x86_64-w64-mingw32") # You need to specify the correct path
+set(SDL2_IMAGE_PATH "libs/SDL2_image/x86_64-w64-mingw32")
+
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
@@ -16,8 +18,14 @@ find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})
 include_directories(${SDL2_TTF_PATH}/include/SDL2)
 
-include_directories("${SDL2_PATH}/include" "${SDL2_TTF_PATH}/include")
-link_directories("${SDL2_PATH}/lib" "${SDL2_TTF_PATH}/lib")
+#Find SDL2_image package
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2_IMAGE_PATH}/include/SDL2)
+
+include_directories("${SDL2_PATH}/include" "${SDL2_TTF_PATH}/include" "${SDL2_IMAGE_PATH}/include")
+link_directories("${SDL2_PATH}/lib" "${SDL2_TTF_PATH}/lib" "${SDL2_IMAGE_PATH}/lib")
+
 
 add_executable(Semestralka main.cpp Tower.cpp Disk.cpp
         GameView.cpp
@@ -27,4 +35,5 @@ add_executable(Semestralka main.cpp Tower.cpp Disk.cpp
 target_link_libraries(${PROJECT_NAME}
         ${SDL2_LIBRARY}
         SDL2_ttf
+        SDL2_image
 )
