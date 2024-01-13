@@ -55,27 +55,55 @@ void GameView::renderTowerBase() {
 }
 
 void GameView::renderDisks() {
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
     // Render disks on the towers
     for (int i = 0; i < game.getTowers().size(); ++i) {
         const auto &tower = game.getTowers()[i];
         int diskCount = tower.getNumberOfDisks();
         if (diskCount > 0) {
             for (int j = diskCount - 1; j >= 0; --j) {
-                Disk disk = tower.getDiskAt(j);
-                SDL_Color diskColor = disk.getColor();
-                SDL_Rect diskRect = calculateDiskRect(disk, i); // Positioning based on tower index
-
-                // Ensure that the disk size is valid and greater than zero
-                if (diskRect.w > 0 && diskRect.h > 0) {
-                    fillRectWithGradient(renderer, &diskRect, diskColor, SDL_Color{static_cast<Uint8>(diskColor.r / 2),
-                                                                                   static_cast<Uint8>(diskColor.g / 2),
-                                                                                   static_cast<Uint8>(diskColor.b / 2),
-                                                                                   255});
+                if (isDiskGrabbed && j == 0 && i == grabbedTower){
+                    continue;
                 }
+
+                    Disk disk = tower.getDiskAt(j);
+                    SDL_Color diskColor = disk.getColor();
+                    SDL_Rect diskRect = calculateDiskRect(disk, i);
+
+                    SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
+                    SDL_RenderFillRect(renderer, &diskRect);
+
             }
         }
     }
+    // Render the grabbed disk at the current mouse position if it's being dragged
+    if (isDiskGrabbed) {
+        renderDiskWhenGrabbed();
+    }
 }
+
+
+
+
+void GameView::renderDiskWhenGrabbed(){
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    // Check if a disk is grabbed and render it at the current mouse position
+    if (isDiskGrabbed) {
+        Disk grabbedDisk = game.getTowers()[grabbedTower].getTop();
+        SDL_Color diskColor = grabbedDisk.getColor();
+        SDL_Rect diskRect = calculateDiskRectAtMouse(grabbedDisk, mouseX, mouseY);
+
+        // Render the grabbed disk at the current mouse position
+        // Use the current mouse position as (x, y) in diskRect
+        SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
+        SDL_RenderFillRect(renderer, &diskRect);
+    }
+}
+
+
+
 
 
 void GameView::render() {
@@ -165,7 +193,7 @@ void GameView::renderStartScreen() {
     SDL_Rect startButtonRect = {200, 200, 400, 200}; // Position and size of the button
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255); // Button color
     SDL_RenderFillRect(renderer, &startButtonRect);
-    fillRectWithGradient(renderer,&startButtonRect,SDL_Color{50, 50, 50, 255}, SDL_Color{100, 100, 100, 255});
+    fillRectWithGradient(renderer, &startButtonRect, SDL_Color{50, 50, 50, 255}, SDL_Color{100, 100, 100, 255});
 
     // Render text for the "Start" button
     SDL_Color textColor = {255, 255, 255};
@@ -223,7 +251,6 @@ std::pair<int, int> GameView::getDiskClicked(int x, int y) {
 
         // Iterate from top disk to bottom disk
         for (int j = diskCount - 1; j >= 0; --j) {
-            Disk towerAtInt = tower.getDiskAt(j);
             Disk diskattop = tower.getDisks().top();
             diskattop.getColor();
             SDL_Rect diskRect = calculateDiskRect(diskattop, i);
@@ -256,7 +283,7 @@ void GameView::initializeButtons() {
     buttons[RESTART] = {xPos, yPos, buttonWidth, buttonHeight}; // Restart button
     buttons[SOLVE] = {xPos + buttonWidth + 10, yPos, buttonWidth, buttonHeight}; // Solve button
     buttons[INCREASE_DISKS] = {xPos - buttonWidth - 10, yPos, buttonWidth, buttonHeight}; // Up button
-    buttons[DECREASE_DISKS] = {xPos - buttonWidth*2 - 20, yPos, buttonWidth, buttonHeight}; // Down button
+    buttons[DECREASE_DISKS] = {xPos - buttonWidth * 2 - 20, yPos, buttonWidth, buttonHeight}; // Down button
 
     SDL_Init(TTF_Init());
     // Initialize SDL_ttf for text rendering
@@ -345,15 +372,16 @@ SDL_Rect GameView::calculateTowerRect(int towerIndex) {
     int towerHeight = (20 * (game.getNumberOfDisks() + 1)); // Height of the tower
     int windowWidth = 800; // Assuming window width is 800
     int windowHeight = 600; // Assuming window height is 600
-    int spacing = (windowWidth > 4) ? (windowWidth / 4) : 1; // Increase the spacing to divide window into 6 parts for 3 towers
+    int spacing = (windowWidth > 4) ? (windowWidth / 4)
+                                    : 1; // Increase the spacing to divide window into 6 parts for 3 towers
     int baseHeight = 20; // Height of the base
 
     int x;
-    if  (towerIndex == 0){
-        x =  ((spacing) * (towerIndex + 1) - towerWidth / 2) - 10;
-    }else if(towerIndex == 2 ){
-        x = ((spacing) * (towerIndex + 1) - towerWidth / 2) +10;
-    }else{
+    if (towerIndex == 0) {
+        x = ((spacing) * (towerIndex + 1) - towerWidth / 2) - 10;
+    } else if (towerIndex == 2) {
+        x = ((spacing) * (towerIndex + 1) - towerWidth / 2) + 10;
+    } else {
         x = (spacing) * (towerIndex + 1) - towerWidth / 2;
     }
 
@@ -379,6 +407,17 @@ SDL_Rect GameView::calculateDiskRect(const Disk &disk, int towerIndex) {
     return diskRect;
 }
 
+
+SDL_Rect GameView::calculateDiskRectAtMouse(const Disk &disk, int xM, int yM) {
+    int diskHeight = 20; // Height of each disk
+    int baseDiskWidth = 250; // Base width to be modified based on disk size
+    int diskWidth = baseDiskWidth * 0.01 * disk.getSize(); // Example size calculation
+
+
+    SDL_Rect diskRect = {xM, yM, diskWidth, diskHeight};
+    return diskRect;
+}
+
 bool GameView::getClickedStart(int i, int i1) {
     int mouseX, mouseY;
     SDL_Rect startButtonRect = {200, 200, 400, 200}; // Position and size of the button
@@ -391,4 +430,6 @@ bool GameView::getClickedStart(int i, int i1) {
     }
     return false;
 }
+
+
 

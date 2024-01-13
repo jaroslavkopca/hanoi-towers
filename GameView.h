@@ -26,7 +26,14 @@ private:
     SDL_Texture *startTextTexture;
 
 
+
+
+
 public:
+    bool isDiskGrabbed = false;
+    int grabbedTower = -1; // Tower index of the grabbed disk
+    int grabbedDiskIndex = -1; // Index of the grabbed disk in its tower
+
     enum ButtonType {
         RESTART, SOLVE, INCREASE_DISKS, DECREASE_DISKS, NUM_BUTTONS, START
     };
@@ -68,6 +75,11 @@ public:
     void renderStartScreen();
 
     bool getClickedStart(int i, int i1);
+
+    SDL_Rect calculateDiskRectAtMouse(const Disk &disk, int xM, int yM);
+
+
+    void renderDiskWhenGrabbed();
 };
 
 
