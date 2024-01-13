@@ -76,6 +76,7 @@ void GameController::handleUserInput(SDL_Event &e) {
                     break;
                 case GameView::SOLVE:
                     if (!game.isGameWon()) {
+                        restartGame();
                         solveGame(game.getNumberOfDisks(), 0, 2, 1);
                     }
                     std::cout << "SOLVEEEEEEEEEEEEEEEEEE" << std::endl;
