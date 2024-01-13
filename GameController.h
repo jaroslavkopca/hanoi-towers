@@ -37,6 +37,8 @@ public:
 
 
     void returnDisk(int tower, Disk disk);
+
+    void animateDiskMovement(int fromTower, int toTower);
 };
 
 #endif //SEMESTRALKA_GAMECONTROLLER_H

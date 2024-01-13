@@ -14,7 +14,6 @@ Game::Game(){
 
 void Game::startGame() {
     isStarted = true;
-
 }
 
 
@@ -77,6 +76,7 @@ int Game::getNumberOfMoves() {
     return (1 << numberOfDisc) - 1;
 }
 
+
 int Game::getLargestDiskSize() {
     largestDiskSize = numberOfDisc * 10;
     return largestDiskSize;
@@ -113,6 +113,14 @@ Disk Game::removeDisk(int i) {
 
 void Game::returnDisk(int i, Disk disk) {
     towers[i].addDisk(disk);
+}
+
+bool Game::isSolvingGame() {
+    return isSolving;
+}
+
+void Game::setSolving(bool b) {
+    isSolving = b;
 }
 
 

@@ -18,6 +18,7 @@ GameView::GameView(Game &game) : game(game) {
             std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         } else {
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            render();
             if (!renderer) {
                 std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
             }
@@ -62,16 +63,16 @@ void GameView::renderDisks() {
         int diskCount = tower.getNumberOfDisks();
         if (diskCount > 0) {
             for (int j = diskCount - 1; j >= 0; --j) {
-                if (isDiskGrabbed && j == 0 && i == grabbedTower){
+                if (isDiskGrabbed && j == 0 && i == grabbedTower) {
                     continue;
                 }
 
-                    Disk disk = tower.getDiskAt(j);
-                    SDL_Color diskColor = disk.getColor();
-                    SDL_Rect diskRect = calculateDiskRect(disk, i);
+                Disk disk = tower.getDiskAt(j);
+                SDL_Color diskColor = disk.getColor();
+                SDL_Rect diskRect = calculateDiskRect(disk, i);
 
-                    SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
-                    SDL_RenderFillRect(renderer, &diskRect);
+                SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
+                SDL_RenderFillRect(renderer, &diskRect);
 
             }
         }
@@ -83,9 +84,7 @@ void GameView::renderDisks() {
 }
 
 
-
-
-void GameView::renderDiskWhenGrabbed(){
+void GameView::renderDiskWhenGrabbed() {
     int mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     if (isDiskGrabbed) {
@@ -97,9 +96,6 @@ void GameView::renderDiskWhenGrabbed(){
         SDL_RenderFillRect(renderer, &diskRect);
     }
 }
-
-
-
 
 
 void GameView::render() {
@@ -176,9 +172,10 @@ void GameView::renderTextAndUI() {
     std::string disksText = "Disks: " + std::to_string(game.getNumberOfDisks());
     renderText(renderer, disksText.c_str(), textColor, {10, 10, 100, 30}); // Position text at the bottom left corner
 
-    if  (game.isGameWon()){
+    if (game.isGameWon()) {
         std::string winText = "Game WON ! ";
-        renderText(renderer, winText.c_str(), textColor, {550, 550, 100, 30}); // Position text at the bottom right corner
+        renderText(renderer, winText.c_str(), textColor,
+                   {550, 550, 100, 30}); // Position text at the bottom right corner
     }
 }
 
@@ -232,7 +229,7 @@ void GameView::fillRectWithGradient(SDL_Renderer *renderer, SDL_Rect *rect, SDL_
 
 int GameView::getTowerClicked(int x, int y) {
     for (int i = 0; i < game.getTowers().size(); ++i) {
-        SDL_Rect towerRect = calculateTowerRect(i);
+        SDL_Rect towerRect = calculateTowerRectDroppable(i);
         if (x >= towerRect.x && x < (towerRect.x + towerRect.w) &&
             y >= towerRect.y && y < (towerRect.y + towerRect.h)) {
             return i;
@@ -375,8 +372,8 @@ GameView::ButtonType GameView::getButtonClicked(int x, int y) {
 SDL_Rect GameView::calculateTowerRect(int towerIndex) {
     int towerWidth = 20; // Width of the tower
     int towerHeight = (20 * (game.getNumberOfDisks() + 1)); // Height of the tower
-    int windowWidth = 800; // Assuming window width is 800
-    int windowHeight = 600; // Assuming window height is 600
+    int windowWidth = 800;
+    int windowHeight = 600;
     int spacing = (windowWidth > 4) ? (windowWidth / 4)
                                     : 1; // Increase the spacing to divide window into 6 parts for 3 towers
     int baseHeight = 20; // Height of the base
@@ -395,6 +392,46 @@ SDL_Rect GameView::calculateTowerRect(int towerIndex) {
     SDL_Rect towerRect = {x, y, towerWidth, towerHeight};
     return towerRect;
 }
+
+SDL_Rect GameView::calculateTowerRectDroppable(int towerIndex) {
+    int towerWidth = (game.getLargestDiskSize() + 10) * 250 * 0.01;; // Width of the tower
+    int towerHeight = (20 * (game.getNumberOfDisks() + 1)); // Height of the tower
+    int windowWidth = 800;
+    int windowHeight = 600;
+    int spacing = (windowWidth > 4) ? (windowWidth / 4)
+                                    : 1; // Increase the spacing to divide window into 6 parts for 3 towers
+    int baseHeight = 20; // Height of the base
+
+    int x;
+    if (towerIndex == 0) {
+        x = ((spacing) * (towerIndex + 1) - towerWidth / 2) - 10;
+    } else if (towerIndex == 2) {
+        x = ((spacing) * (towerIndex + 1) - towerWidth / 2) + 10;
+    } else {
+        x = (spacing) * (towerIndex + 1) - towerWidth / 2;
+    }
+
+    int y = 400 - towerHeight - baseHeight; // Adjusted 'y' for the base
+
+    SDL_Rect towerRect = {x, y, towerWidth, towerHeight};
+    return towerRect;
+}
+
+std::pair<int, int> GameView::calculateDiskRectXY(const Disk &disk, int towerIndex, int frame) {
+    int diskHeight = 20; // Height of each disk
+    int baseDiskWidth = 250; // Base width to be modified based on disk size
+    int diskWidth = baseDiskWidth * 0.01 * disk.getSize(); // Example size calculation
+
+    int diskPosition = game.getDiskPositionInTower(game.getTowers()[towerIndex].getTop(), towerIndex);
+    if (diskPosition == -1){diskPosition = 0;}
+    // Reuse tower rectangle to position disks
+    SDL_Rect towerRect = calculateTowerRect(towerIndex);
+    int x = towerRect.x + (towerRect.w - diskWidth) / 2; // Center disk on tower
+    int y = towerRect.y + towerRect.h - diskHeight * (diskPosition + frame);
+
+    return {x, y};
+}
+
 
 SDL_Rect GameView::calculateDiskRect(const Disk &disk, int towerIndex) {
     int diskHeight = 20; // Height of each disk
@@ -434,6 +471,35 @@ bool GameView::getClickedStart(int i, int i1) {
         return true;
     }
     return false;
+}
+void GameView::animateDiskMovement(int fromTower, int toTower) {
+    const int animationFrames = 30;
+    Disk grabbedDisk = game.getTowers()[fromTower].getTop();
+
+    std::pair<int, int> startPos = calculateDiskRectXY(grabbedDisk, fromTower, 0);
+    std::pair<int, int> endPos = calculateDiskRectXY(grabbedDisk, toTower, 1);
+
+    int deltaX = (endPos.first - startPos.first) / animationFrames;
+    int deltaY = (endPos.second - startPos.second) / animationFrames;
+
+    for (int frame = 0; frame < animationFrames; ++frame) {
+        startPos.first += deltaX;
+        startPos.second += deltaY;
+        render(); // Render the entire game state in each frame
+        renderDiskOnMove(grabbedDisk, startPos.first, startPos.second);
+        SDL_RenderPresent(renderer); // Update the screen
+        SDL_Delay(10); // Delay to control the animation speed
+    }
+}
+
+
+void GameView::renderDiskOnMove(Disk& disk, int posX, int posY) {
+    SDL_Color diskColor = disk.getColor();
+    SDL_Rect diskRect = calculateDiskRectAtMouse(disk, posX, posY);
+
+    SDL_SetRenderDrawColor(renderer, diskColor.r, diskColor.g, diskColor.b, 255);
+    SDL_RenderFillRect(renderer, &diskRect);
+
 }
 
 

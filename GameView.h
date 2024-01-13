@@ -81,6 +81,17 @@ public:
 
 
     void renderDiskWhenGrabbed();
+
+    void animateDiskMovement(int i);
+
+    void animateDiskMovement(int fromTower, int toTower);
+
+
+    void renderDiskOnMove(Disk &disk, int posX, int posY);
+
+    std::pair<int, int> calculateDiskRectXY(const Disk &disk, int towerIndex, int i);
+
+    SDL_Rect calculateTowerRectDroppable(int towerIndex);
 };
 
 

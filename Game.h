@@ -23,6 +23,7 @@ private:
     int numberOfDisc;
     bool isStarted;
     int largestDiskSize = 0;
+    bool isSolving;
 
 public:
     explicit  Game();
@@ -69,6 +70,11 @@ public:
     Disk removeDisk(int i);
 
     void returnDisk(int i, Disk disk);
+
+
+    void setSolving(bool b);
+
+    bool isSolvingGame();
 };
 
 
