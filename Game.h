@@ -21,10 +21,21 @@ class Game {
 private:
     std::vector<Tower> towers;
     int numberOfDisc;
+    bool isStarted;
+    int largestDiskSize = 0;
 
 public:
     explicit  Game();
 
+    const SDL_Color predefinedColors[7] = {
+            {255, 0, 0},     // Red
+            {0, 255, 0},     // Green
+            {0, 0, 255},     // Blue
+            {255, 255, 0},   // Yellow
+            {255, 0, 255},   // Magenta
+            {0, 255, 255},   // Cyan
+            {128, 128, 128}  // Gray
+    };
 
 
     void moveDisc(int fromTower, int toTower);
@@ -41,9 +52,18 @@ public:
 
     void startGame();
 
-    void setupGame(int i);
 
     void resetGame();
+
+    int getNumberOfMoves();
+
+    int getLargestDiskSize();
+
+    bool isGameStarted();
+
+    int getNumberOfDisks();
+
+    void setNumberOfDisks(int i);
 };
 
 

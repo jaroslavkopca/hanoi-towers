@@ -9,62 +9,14 @@
 
 
 Game::Game(){
-    // Initialize the game, for example, by asking the number of disks
-//    std::cout << "Enter the number of disks: ";
-//    std::cin >> numberOfDisk;
-    towers.resize(3);
-
-    towers[0].addDisk(Disk(40, SDL_Color{255, 0, 0})); // Red disk
-    towers[0].addDisk(Disk(30, SDL_Color{0, 255, 0})); // Green disk
-    towers[0].addDisk(Disk(20, SDL_Color{0, 0, 255})); // Blue disk
+    setNumberOfDisks(3);
 }
 
 void Game::startGame() {
-//    bool gameOver = false;
-//
-//    SDL_Event e;
-//    while (!gameOver) {
-//        while (SDL_PollEvent(&e) != 0) {
-//            // Check for quit event
-//            if (e.type == SDL_QUIT) {
-//                gameOver = true;
-//            }
-//
-//            // Handle other events like mouse clicks
-//            if (e.type == SDL_MOUSEBUTTONDOWN) {
-//                // Determine which tower or disk was clicked
-//                // This method depends on how you've implemented your GameView
-////                int clickedTower = gameView.getTowerClicked(e.button.x, e.button.y);
-//
-//                // If a tower is clicked, determine the move
-//                if (clickedTower != -1) {
-//                    // Logic to determine fromTower and toTower based on user's click
-//                    int fromTower, toTower;
-//                    // ... Your logic to set fromTower and toTower based on click ...
-//
-//                    if (isValidMove(fromTower, toTower)) {
-//                        moveDisc(fromTower, toTower);
-//
-//                        if (isGameWon()) {
-//                            std::cout << "Congratulations! You won!" << std::endl;
-//                            gameOver = true;
-//                        }
-//                    } else {
-//                        std::cout << "Invalid move. Try again." << std::endl;
-//                    }
-//                }
-//            }
-//        }
-//
-//        // Render game state
-////        gameView.render();
-//    }
+    isStarted = true;
+
 }
 
-
-//void Game::startGame(int argc, char *argv[]) {
-//
-//}
 
 void Game::moveDisc(int fromTower, int toTower) {
     // Assuming tower indices are 1-based in user input and 0-based internally
@@ -114,14 +66,46 @@ int Game::getDiskPositionInTower(const Disk& targetDisk, int towerIndex) {
     }
 
     return -1; // Return -1 if the disk is not found in the tower
-}
-
-void Game::setupGame(int i) {
-
 
 }
+
+
 
 void Game::resetGame() {
-
+    setNumberOfDisks(numberOfDisc);
 }
+
+int Game::getNumberOfMoves() {
+    return (1 << numberOfDisc) - 1;
+}
+
+int Game::getLargestDiskSize() {
+    return numberOfDisc * 10;
+}
+
+bool Game::isGameStarted(){
+    return isStarted;
+}
+
+int Game::getNumberOfDisks() {
+    return numberOfDisc;
+}
+
+void Game::setNumberOfDisks(int numberOfDisks) {
+    if (numberOfDisks >= 1 && numberOfDisks <=7) {
+        // Clear existing towers and initialize with the new number of disks
+        towers.clear();
+        towers.resize(3);
+
+        // Create and add the disks to the first tower based on the new number of disks
+        for (int size = numberOfDisks; size > 0; --size) {
+            SDL_Color diskColor = predefinedColors[size];
+            towers[0].addDisk(Disk(size * 10, diskColor));
+        }
+
+        // Update the number of disks
+        numberOfDisc = numberOfDisks;
+    }
+}
+
 
