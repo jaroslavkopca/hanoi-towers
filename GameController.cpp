@@ -38,73 +38,60 @@ void GameController::handleUserInput(SDL_Event &e) {
     if (e.type == SDL_MOUSEBUTTONDOWN) {
         int x, y;
         SDL_GetMouseState(&x, &y);
-
-        // Check if a button was clicked
-        GameView::ButtonType clickedButton = gameView.getButtonClicked(x, y);
-        if (clickedButton != GameView::NUM_BUTTONS) {
-            switch (clickedButton) {
-                case GameView::RESTART:
-                    restartGame();
-                    std::cout << "RESTAAAAAAAAAAAART" << std::endl;
-                    break;
-                case GameView::SOLVE:
-                    solveGame();
-                    std::cout << "SOLVEEEEEEEEEEEEEEEEEE" << std::endl;
-                    break;
-                    // Handle other buttons
-            }
-        } else {
+        if (gameView.getClickedStart(x, y)) {
+            game.startGame();
+        };
+        if (currentState == GameControllerState::SELECT_DISK) {
             // Check if a disk was clicked
-//            if (selectedDisk == -1) {
-//                // If no disk is currently selected, check if a disk was clicked
-//                auto [clickedTower, clickedDisk] = gameView.getDiskClicked(x, y);
-//                if (clickedDisk != -1) {
-//                    std::cout << "Disk selected"  << clickedDisk << std::endl;
-//                    selectedDisk = clickedDisk;
-//                    selectedTower = clickedTower;
-//                    std::cout << "Selected tower"  <<selectedTower << std::endl;
-//                }
-//            } else {
-//                // If a disk is already selected, check if a tower was clicked
-//                int towerIndex = gameView.getTowerClicked(x, y);
-//                if (towerIndex != -1) {
-//                    std::cout << "Attempting to move disk" << std::endl;
-//                    if (towerIndex != selectedTower && moveDisk(selectedTower, towerIndex)) {
-//                        std::cout << "Disk moved successfully" << std::endl;
-//                    } else {
-//                        std::cout << "Invalid move" << std::endl;
-//                    }
-//                    // Reset selection regardless of move success
-//                    selectedDisk = -1;
-//                    selectedTower = -1;
-//                }
-//            }
-            if (currentState == GameControllerState::SELECT_DISK) {
-                // Check if a disk was clicked
-                auto [clickedTower, clickedDisk] = gameView.getDiskClicked(x, y);
-                if (clickedDisk != -1) {
-                    std::cout << "Disk selected: " << clickedDisk << std::endl;
-                    selectedDisk = clickedDisk;
-                    selectedTower = clickedTower;
-                    std::cout << "Tower first  :  " << selectedTower << std::endl;
-                    currentState = GameControllerState::WAIT_FOR_TOWER;
-                }
-            } else if (currentState == GameControllerState::WAIT_FOR_TOWER) {
-                // Check if a tower was clicked
-                int towerIndex = gameView.getTowerClicked(x, y);
-                if (towerIndex != -1) {
-                    std::cout << "Attempting to move disk  :  " << towerIndex << std::endl;
-                    if (towerIndex != selectedTower && moveDisk(selectedTower, towerIndex)) {
-                        std::cout << "Disk moved successfully" << std::endl;
-                    } else {
-                        std::cout << "Invalid move" << std::endl;
+            auto [clickedTower, clickedDisk] = gameView.getDiskClicked(x, y);
+            if (clickedDisk != -1) {
+                std::cout << "Disk selected: " << clickedDisk << std::endl;
+                selectedDisk = clickedDisk;
+                selectedTower = clickedTower;
+                std::cout << "Tower first  :  " << selectedTower << std::endl;
+                currentState = GameControllerState::WAIT_FOR_TOWER;
+            } else {
+                // Check if a button was clicked
+                GameView::ButtonType clickedButton = gameView.getButtonClicked(x, y);
+                if (clickedButton != GameView::NUM_BUTTONS) {
+                    switch (clickedButton) {
+                        case GameView::RESTART:
+                            restartGame();
+                            std::cout << "RESTAAAAAAAAAAAART" << std::endl;
+                            break;
+                        case GameView::SOLVE:
+                            if(!game.isGameWon()){
+                                solveGame(game.getNumberOfDisks(),0,2,1);
+                            }
+                            std::cout << "SOLVEEEEEEEEEEEEEEEEEE" << std::endl;
+                            break;
+                        case GameView::INCREASE_DISKS:
+                            game.setNumberOfDisks(game.getNumberOfDisks() + 1);
+                            std::cout << "INCR" << std::endl;
+                            break;
+                        case GameView::DECREASE_DISKS:
+                            game.setNumberOfDisks(game.getNumberOfDisks() - 1);
+                            std::cout << "DECR" << std::endl;
+                            break;
                     }
-                    currentState = GameControllerState::SELECT_DISK;
                 }
+            }
+        } else if (currentState == GameControllerState::WAIT_FOR_TOWER) {
+            // Check if a tower was clicked
+            int towerIndex = gameView.getTowerClicked(x, y);
+            if (towerIndex != -1) {
+                std::cout << "Attempting to move disk  :  " << towerIndex << std::endl;
+                if (towerIndex != selectedTower && moveDisk(selectedTower, towerIndex)) {
+                    std::cout << "Disk moved successfully" << std::endl;
+                } else {
+                    std::cout << "Invalid move" << std::endl;
+                }
+                currentState = GameControllerState::SELECT_DISK;
             }
         }
     }
 }
+
 
 bool GameController::moveDisk(int fromTower, int toTower) {
     // Implement the logic to move a disk from one tower to another
@@ -115,20 +102,32 @@ bool GameController::moveDisk(int fromTower, int toTower) {
     return false;
 }
 
-void GameController::changeNumberOfDisks(int newNumber) {
-    // Implement logic to change the number of disks in the game
-    game.setupGame(newNumber); // Assuming setupGame method exists in Game
-}
 
 void GameController::restartGame() {
-    // Implement game restart logic
-    game.resetGame(); // Assuming resetGame method exists in Game
+    game.resetGame();
 }
 
-void GameController::solveGame() {
-    // Implement logic to automatically solve the game
-    // This could be an algorithm to solve Tower of Hanoi
+void GameController::solveGame(int numberOfDisks, int sourceTower, int destinationTower, int auxiliaryTower) {
+    if (numberOfDisks == 1) {
+        // Base case: Move the smallest disk from source to destination
+        game.moveDisc(sourceTower, destinationTower);
+        gameView.render();
+        SDL_Delay(400);
+    } else {
+        // Recursive case: Move (numberOfDisks-1) disks from source to auxiliary using destination as auxiliary
+        solveGame(numberOfDisks - 1, sourceTower, auxiliaryTower, destinationTower);
+
+        // Move the largest disk from source to destination
+        game.moveDisc(sourceTower, destinationTower);
+        gameView.render();
+        SDL_Delay(400);
+
+        // Move (numberOfDisks-1) disks from auxiliary to destination using source as auxiliary
+        solveGame(numberOfDisks - 1, auxiliaryTower, destinationTower, sourceTower);
+    }
 }
+
+
 
 void GameController::dragDisk(int diskId, int targetTower) {
     // Implement logic for dragging a disk to a new tower
