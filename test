@@ -1,0 +1,27 @@
+# Each line represents an SDL event
+
+# Mouse click event to start the game
+SDL_MOUSEBUTTONDOWN 1 100 100
+
+# Mouse click event to grab a disk
+SDL_MOUSEBUTTONDOWN 1 200 200
+
+# Mouse release event to move the grabbed disk
+SDL_MOUSEBUTTONUP 1 300 200
+
+# Mouse click event to restart the game
+SDL_MOUSEBUTTONDOWN 1 50 50
+
+# Mouse click event to solve the game
+SDL_MOUSEBUTTONDOWN 1 75 75
+
+# Mouse click event to increase the number of disks
+SDL_MOUSEBUTTONDOWN 1 120 120
+
+# Mouse click event to decrease the number of disks
+SDL_MOUSEBUTTONDOWN 1 140 140
+
+# Mouse click event to exit the game
+SDL_MOUSEBUTTONDOWN 1 160 160
+
+# Additional SDL events can be added here...

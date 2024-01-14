@@ -65,12 +65,12 @@ The computer can solve the game. (3x speed up gif)<br>
 </ul>
 
 <h2 id="how-it-works">How It Works</h2>
+<p>In this project are used three threads that run continuously and work together:</p>
 <ul>
-    <li><strong>Disk</strong>: Represents the individual disks. Each disk has a size attribute.</li>
-    <li><strong>Tower</strong>: Represents the towers. Each tower holds a stack of disks.</li>
     <li><strong>Game</strong>: Manages the game's state and rules.</li>
     <li><strong>GameController</strong>: Handles user input and communicates between the Game and GameView.</li>
     <li><strong>GameView</strong>: Responsible for displaying the current state of the game to the player.</li>
 </ul>
+
 </body>
 </html>

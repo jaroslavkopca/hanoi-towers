@@ -186,3 +186,5 @@ Attempting to move disk  :  1
 Disk moved successfully
 EXIT
 EXIT
+INCR
+DECR

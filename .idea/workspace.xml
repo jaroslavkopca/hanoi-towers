@@ -20,25 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01873c6a-b69e-4332-aa72-393f8c29f1c5" name="Changes" comment="Update Game Controller to ignore inputs while solving&#10;&#10;The Game Controller now ignores any mouse clicks if the game is in 'solving' state. This prevents unexpected behavior during automatic solving process. Also, excessive whitespaces were removed and comments have been added for better readability and understanding of the code. SDL2_image package was removed from CMakeLists as it was not in use.">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Semestralka.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tower.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Tower.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tower.h" beforeDir="false" afterPath="$PROJECT_DIR$/Tower.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/.cmake/api/v1/reply/cache-v2-5b1eae85916b1660a7eb.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/.cmake/api/v1/reply/index-2024-01-14T15-32-47-0379.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/.ninja_deps" afterDir="false" />
+    <list default="true" id="01873c6a-b69e-4332-aa72-393f8c29f1c5" name="Changes" comment="Remove unnecessary files from version control&#10;&#10;The .gitignore and cmake-build-debug-mingw files were removed from version control as they contained build configuration and IDE related settings that are not relevant to the main project codebase. Keeping these files in the repository could lead to issues when different developers are using different setups or IDEs.">
+      <change afterPath="$PROJECT_DIR$/test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/Disk.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/Disk.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/GameController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/GameController.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/GameView.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/GameView.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/Tower.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/Tower.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/CMakeFiles/Semestralka.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/Semestralka.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/Semestralka.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug-mingw/logfile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug-mingw/logfile.txt" afterDir="false" />
@@ -73,7 +59,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -132,7 +117,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Semestralka" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Semestralka" TARGET_NAME="Semestralka" CONFIG_NAME="Debug-MinGW" RUN_TARGET_PROJECT_NAME="Semestralka" RUN_TARGET_NAME="Semestralka">
+    <configuration name="Semestralka" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$PROJECT_DIR$/test" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Semestralka" TARGET_NAME="Semestralka" CONFIG_NAME="Debug-MinGW" RUN_TARGET_PROJECT_NAME="Semestralka" RUN_TARGET_NAME="Semestralka">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -161,7 +146,7 @@
       <workItem from="1705187198352" duration="2961000" />
       <workItem from="1705236415710" duration="2505000" />
       <workItem from="1705243958029" duration="4023000" />
-      <workItem from="1705248032405" duration="2841000" />
+      <workItem from="1705248032405" duration="5956000" />
     </task>
     <task id="LOCAL-00001" summary="Start of project.">
       <option name="closed" value="true" />
@@ -331,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705249117098</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Remove unnecessary files from version control&#10;&#10;The .gitignore and cmake-build-debug-mingw files were removed from version control as they contained build configuration and IDE related settings that are not relevant to the main project codebase. Keeping these files in the repository could lead to issues when different developers are using different setups or IDEs.">
+      <option name="closed" value="true" />
+      <created>1705250939195</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1705250939195</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +359,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Start of project." />
     <MESSAGE value="Add new target and update build files&#10;&#10;Removed previous cmake-based config files and added new ones reflecting the current state of the project. This update includes a new build target and relates to necessary changes in the cmake build scripts." />
     <MESSAGE value="Base of the project&#10;&#10;Added the project architecture, added libs for GUI SDL2" />
     <MESSAGE value="Implement GameController and enhance game logic&#10;&#10;Added full implementation to GameController, implementing SDL event handling and game control logistics. Additional methods have also been introduced to Game, GameController and Tower classes for handling user input, game and view updates, disk movement, and game resolution. The GameView rendering logic has been improved and some protections against possible divisions by zero have been added." />
@@ -391,7 +383,8 @@
     <MESSAGE value="Refactor code and add detailed comments&#10;&#10;Refactored and condensed code across several classes to improve readability. In GameController, added a condition to ignore mouse clicks during game solving, reducing redundancy. Also" />
     <MESSAGE value="Added detailed comments to Ninja log and build.ninja for increased clarity. Adjusted configuration variables for custom commands, object build statements and link build statements to improve system performance. These changes will aid developers in understanding the project's configuration and build system." />
     <MESSAGE value="Update Game Controller to ignore inputs while solving&#10;&#10;The Game Controller now ignores any mouse clicks if the game is in 'solving' state. This prevents unexpected behavior during automatic solving process. Also, excessive whitespaces were removed and comments have been added for better readability and understanding of the code. SDL2_image package was removed from CMakeLists as it was not in use." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Game Controller to ignore inputs while solving&#10;&#10;The Game Controller now ignores any mouse clicks if the game is in 'solving' state. This prevents unexpected behavior during automatic solving process. Also, excessive whitespaces were removed and comments have been added for better readability and understanding of the code. SDL2_image package was removed from CMakeLists as it was not in use." />
+    <MESSAGE value="Remove unnecessary files from version control&#10;&#10;The .gitignore and cmake-build-debug-mingw files were removed from version control as they contained build configuration and IDE related settings that are not relevant to the main project codebase. Keeping these files in the repository could lead to issues when different developers are using different setups or IDEs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unnecessary files from version control&#10;&#10;The .gitignore and cmake-build-debug-mingw files were removed from version control as they contained build configuration and IDE related settings that are not relevant to the main project codebase. Keeping these files in the repository could lead to issues when different developers are using different setups or IDEs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
