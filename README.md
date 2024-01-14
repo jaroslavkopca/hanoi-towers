@@ -36,6 +36,7 @@ disks.</li>
 </ul>
 
 <h2 id="libraries">Libraries</h2>
+<p>Libraries are part of the proejct and cmake. So there should be no need for installing them when main branch is pulled.</p>
 <ul>
 <li><strong>SDL2</strong>: Simple DirectMedia Layer is a cross-platform development library designed to provide
                             low level access to audio, keyboard, mouse, joystick, and graphics hardware via
@@ -43,9 +44,24 @@ disks.</li>
 <li><strong>SDL2_TTF</strong>: SDL2 addon for text.</li>
 </ul>
 
-<h3 id="gameplay">Game Play</h3>
+<h2 id="gameplay">Game Play</h2>
 <ul>
-    TODO
+<li>
+First click on the start button to start the game.<br>
+<img src="images/start.png" height="350" width="600"/>
+</li>
+<li>
+When game is started u can drag disks between towers if the move is correct.
+<img src="images/moves.gif" height="350" width="600"/>
+</li>
+<li>
+You can change the number of disks.
+<img src="images/updown.gif" height="350" width="600"/>
+</li>
+<li>
+The computer can solve the game. (3x speed up gif)
+<img src="images/solve.gif" height="350" width="600"/>
+</li>
 </ul>
 
 <h2 id="how-it-works">How It Works</h2>
