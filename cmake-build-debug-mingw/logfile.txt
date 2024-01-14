@@ -1,0 +1,48 @@
+EXIT
+INCR
+INCR
+DECR
+DECR
+RESTART
+INCR
+DECR
+EXIT
+INCR
+INCR
+DECR
+DECR
+EXIT
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+INCR
+EXIT
+INCR
+Disk grabbed: 3
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  1
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  2
+Attempting to move disk  :  1
+Disk moved successfully
+RESTART
+SOLVE
+EXIT
