@@ -51,15 +51,15 @@ First click on the start button to start the game.<br>
 <img src="images/start.png" height="350" width="600"/>
 </li>
 <li>
-When game is started u can drag disks between towers if the move is correct.
+When game is started u can drag disks between towers if the move is correct.<br>
 <img src="images/moves.gif" height="350" width="600"/>
 </li>
 <li>
-You can change the number of disks.
+You can change the number of disks.<br>
 <img src="images/updown.gif" height="350" width="600"/>
 </li>
 <li>
-The computer can solve the game. (3x speed up gif)
+The computer can solve the game. (3x speed up gif)<br>
 <img src="images/solve.gif" height="350" width="600"/>
 </li>
 </ul>
