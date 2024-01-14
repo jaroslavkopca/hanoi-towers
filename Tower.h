@@ -55,6 +55,7 @@ public:
 
     const Disk &getTop() const;
 
+    const Disk &getDiskAt(int i) const;
 };
 
 

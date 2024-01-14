@@ -46,3 +46,143 @@ Disk moved successfully
 RESTART
 SOLVE
 EXIT
+INCR
+INCR
+INCR
+DECR
+DECR
+DECR
+DECR
+DECR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+INCR
+DECR
+DECR
+DECR
+DECR
+DECR
+DECR
+DECR
+DECR
+DECR
+DECR
+SOLVE
+RESTART
+INCR
+INCR
+INCR
+DECR
+SOLVE
+Disk grabbed: 2
+Tower first  :  2
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  2
+Attempting to move disk  :  0
+Disk moved successfully
+RESTART
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  1
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  2
+Attempting to move disk  :  0
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  2
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  2
+Attempting to move disk  :  1
+Disk moved successfully
+SOLVE
+RESTART
+EXIT
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  0
+Invalid move
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+EXIT
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+EXIT
+Disk grabbed: 2
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+Disk grabbed: 1
+Tower first  :  0
+Attempting to move disk  :  2
+Disk moved successfully
+Disk grabbed: 0
+Tower first  :  1
+Attempting to move disk  :  2
+Disk moved successfully
+SOLVE
+RESTART
+SOLVE
+RESTART
+RESTART
+RESTART
+RESTART
+RESTART
+RESTART
+RESTART
+INCR
+INCR
+INCR
+DECR
+DECR
+DECR
+INCR
+INCR
+INCR
+INCR
+RESTART
+INCR
+INCR
+DECR
+Disk grabbed: 5
+Tower first  :  0
+Attempting to move disk  :  1
+Disk moved successfully
+EXIT
+EXIT

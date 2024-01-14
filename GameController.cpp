@@ -143,7 +143,7 @@ void GameController::dragDisk(int diskId, int targetTower) {
 }
 
 Disk GameController::removeDisk(int tower) {
-    game.removeDisk(tower);
+    return game.removeDisk(tower);
 }
 
 void GameController::returnDisk(int tower, Disk disk) {

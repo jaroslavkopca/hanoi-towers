@@ -1,10 +1,8 @@
 # ninja log v5
-8	1257	7269488557808373	CMakeFiles/Semestralka.dir/Disk.cpp.obj	bdc51167474587d6
-4	1354	7269488558778380	CMakeFiles/Semestralka.dir/Tower.cpp.obj	84dddb07fa036bd1
-20	1306	7269488558288262	CMakeFiles/Semestralka.dir/GameController.cpp.obj	45835302297dc859
-2	177	7269495673300467	build.ninja	2d51be8289ba0055
-16	1434	7269488559574412	CMakeFiles/Semestralka.dir/GameView.cpp.obj	b5140aaca3235cc8
-12	1411	7269488559340873	CMakeFiles/Semestralka.dir/main.cpp.obj	46a143fd9443c639
-1434	1584	7269488561037822	Semestralka.exe	9fa479bcb865b1f
-6	1847	7269496614633565	CMakeFiles/Semestralka.dir/GameView.cpp.obj	b5140aaca3235cc8
-1847	2065	7269496616795007	Semestralka.exe	9fa479bcb865b1f
+15	1422	7269524644148238	CMakeFiles/Semestralka.dir/Disk.cpp.obj	bdc51167474587d6
+4	1231	7269525530712150	CMakeFiles/Semestralka.dir/Tower.cpp.obj	84dddb07fa036bd1
+10	1153	7269525529970899	CMakeFiles/Semestralka.dir/GameController.cpp.obj	45835302297dc859
+2	177	7269537258581949	build.ninja	2d51be8289ba0055
+19	1430	7269524910153055	CMakeFiles/Semestralka.dir/GameView.cpp.obj	b5140aaca3235cc8
+10	1395	7269524909800804	CMakeFiles/Semestralka.dir/main.cpp.obj	46a143fd9443c639
+8	599	7269534666126356	Semestralka.exe	a8f9d2e8cc291df

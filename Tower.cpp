@@ -18,9 +18,8 @@ const Disk &Tower::getDiskAt(int i) const {
         for (int j = 0; j < i; ++j) {
             tempStack.pop();
         }
-
-        return tempStack.top();
     }
+    return tempStack.top();
 }
 
 Disk Tower::removeDisk() {
