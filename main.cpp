@@ -3,7 +3,6 @@
 #include "GameController.h"
 
 
-
 int main(int argc, char* argv[]) {
     std::ofstream logFile("logfile.txt", std::ios::app);
     std::cout.rdbuf(logFile.rdbuf());

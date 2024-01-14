@@ -1,21 +1,9 @@
 #include "Game.h"
-#include <iostream>
 #include "Disk.h"
 #include "Tower.h"
-#include "GameView.h"
 
 
-
-
-
-Game::Game(){
-    setNumberOfDisks(3);
-}
-
-void Game::startGame() {
-    isStarted = true;
-}
-
+Game::Game() { setNumberOfDisks(3); }
 
 void Game::moveDisc(int fromTower, int toTower) {
     Disk disc = towers[fromTower].removeDisk();
@@ -32,11 +20,11 @@ bool Game::isValidMove(int fromTower, int toTower) const {
         return false;
     }
 
-    if (towers[fromTower ].isEmpty()) {
+    if (towers[fromTower].isEmpty()) {
         return false;
     }
 
-    if (!towers[toTower ].isEmpty() &&
+    if (!towers[toTower].isEmpty() &&
         towers[toTower].peekDisk().getSize() < towers[fromTower].peekDisk().getSize()) {
         return false;
     }
@@ -44,17 +32,14 @@ bool Game::isValidMove(int fromTower, int toTower) const {
     return true;
 }
 
-const std::vector<Tower>& Game::getTowers() const {
-    return towers;
-}
 
-int Game::getDiskPositionInTower(const Disk& targetDisk, int towerIndex) {
-    const std::stack<Disk>& towerStack = towers[towerIndex].getDisks();
+int Game::getDiskPositionInTower(const Disk &targetDisk, int towerIndex) {
+    const std::stack<Disk> &towerStack = towers[towerIndex].getDisks();
     std::stack<Disk> tempStack = towerStack; // Copy the tower's stack
 
     int position = towers[towerIndex].getNumberOfDisks();
     while (!tempStack.empty()) {
-        const Disk& currentDisk = tempStack.top();
+        const Disk &currentDisk = tempStack.top();
         if (currentDisk == targetDisk) {
             return position;
         }
@@ -67,31 +52,14 @@ int Game::getDiskPositionInTower(const Disk& targetDisk, int towerIndex) {
 }
 
 
-
-void Game::resetGame() {
-    setNumberOfDisks(numberOfDisc);
-}
-
-int Game::getNumberOfMoves() {
-    return (1 << numberOfDisc) - 1;
-}
-
-
-int Game::getLargestDiskSize() {
+const int Game::getLargestDiskSize() {
     largestDiskSize = numberOfDisc * 10;
     return largestDiskSize;
 }
 
-bool Game::isGameStarted(){
-    return isStarted;
-}
-
-int Game::getNumberOfDisks() {
-    return numberOfDisc;
-}
 
 void Game::setNumberOfDisks(int numberOfDisks) {
-    if (numberOfDisks >= 1 && numberOfDisks <=7) {
+    if (numberOfDisks >= 1 && numberOfDisks <= 7) {
         // Clear existing towers and initialize with the new number of disks
         towers.clear();
         towers.resize(3);
@@ -108,19 +76,26 @@ void Game::setNumberOfDisks(int numberOfDisks) {
 }
 
 Disk Game::removeDisk(int i) {
-    towers[i].removeDisk();
+    Disk disc = towers[i].removeDisk();
+    return disc;
 }
 
-void Game::returnDisk(int i, Disk disk) {
-    towers[i].addDisk(disk);
-}
+void Game::startGame() { isStarted = true; }
 
-bool Game::isSolvingGame() {
-    return isSolving;
-}
+bool Game::isGameStarted() { return isStarted; }
 
-void Game::setSolving(bool b) {
-    isSolving = b;
-}
+void Game::resetGame() { setNumberOfDisks(numberOfDisc); }
+
+const std::vector<Tower> &Game::getTowers() const { return towers; }
+
+int const Game::getNumberOfMoves() { return (1 << numberOfDisc) - 1; }
+
+const int Game::getNumberOfDisks() { return numberOfDisc; }
+
+void Game::returnDisk(int i, Disk disk) { towers[i].addDisk(disk); }
+
+bool Game::isSolvingGame() { return isSolving; }
+
+void Game::setSolving(bool b) { isSolving = b; }
 
 

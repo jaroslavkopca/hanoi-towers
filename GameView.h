@@ -1,12 +1,19 @@
-//
-// Created by jarek on 11.01.2024.
-//
-
 #ifndef SEMESTRALKA_GAMEVIEW_H
 #define SEMESTRALKA_GAMEVIEW_H
 
 #include "Game.h"
 
+/**
+ * @class GameView
+ * @brief Represents the graphical view of the Tower of Hanoi game.
+ *
+ * The GameView class is responsible for rendering the Tower of Hanoi game
+ * using SDL (Simple DirectMedia Layer). It provides methods for rendering
+ * the towers, disks, and UI elements, as well as handling user input.
+ *
+ * This class depends on the Game and Disk classes to retrieve information
+ * about the game state and disk properties.
+ */
 class GameView {
 private:
     Game &game;
@@ -25,11 +32,6 @@ private:
 
     bool startButtonVisible; // Flag to track the visibility of the START button
     SDL_Texture *startTextTexture;
-
-
-
-
-
 public:
     bool isDiskGrabbed = false;
     int grabbedTower = -1; // Tower index of the grabbed disk
@@ -43,6 +45,12 @@ public:
 
     ~GameView();
 
+    /**
+    * @brief Render the game view.
+    *
+    * This method is responsible for rendering the Tower of Hanoi game view using SDL. It clears the renderer, sets the
+    * draw color, and renders the various game elements based on the game state.
+    */
     void render();
 
     SDL_Rect calculateDiskRect(const Disk &disk, int towerIndex);
@@ -59,10 +67,28 @@ public:
 
     std::pair<int, int> getDiskClicked(int x, int y);
 
+    /**
+    * @brief Render the text and UI elements for the Tower of Hanoi game view.
+    *
+    * This method is responsible for rendering the moves count, disks count, and game won message on the game view.
+    * It uses the renderText() method to render the text on the SDL renderer at the specified position.
+    */
     void renderTextAndUI();
 
     void fillRectWithGradient(SDL_Renderer *renderer, SDL_Rect *rect, SDL_Color startColor, SDL_Color endColor);
 
+    /**
+    * @brief Render the specified text with the given color to the provided position on the SDL renderer.
+    *
+    * This function loads a font file and uses it to render the specified text with the given color on the provided position
+    * of the SDL renderer. It creates a surface with the rendered text and then converts it to a texture to be rendered on
+     * the screen. After rendering the text, the resources used for rendering are cleaned up.
+     *
+     * @param renderer The SDL renderer on which to render the text.
+     * @param text The text to render.
+    * @param textColor The color of the text.
+    * @param position The position on the renderer where the text should be rendered.
+    */
     void renderText(SDL_Renderer *renderer, const char *text, SDL_Color textColor, SDL_Rect position);
 
     void renderTowers();
@@ -73,6 +99,17 @@ public:
 
     void initialize();
 
+    /**
+    * @class GameView
+    * @brief Represents the graphical view of the Tower of Hanoi game.
+    *
+    * The GameView class is responsible for rendering the Tower of Hanoi game
+    *  using SDL (Simple DirectMedia Layer). It provides methods for rendering
+    * the towers, disks, and UI elements, as well as handling user input.
+     *
+    * This class depends on the Game and Disk classes to retrieve information
+    * about the game state and disk properties.
+    */
     void renderStartScreen();
 
     bool getClickedStart(int i, int i1);
@@ -92,6 +129,12 @@ public:
     std::pair<int, int> calculateDiskRectXY(const Disk &disk, int towerIndex, int i);
 
     SDL_Rect calculateTowerRectDroppable(int towerIndex);
+
+    void initializeTTF();
+
+    void initializeWindowAndRenderer();
+
+    void initializeSDL();
 };
 
 

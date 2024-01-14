@@ -1,19 +1,9 @@
-//
-// Created by jarek on 11.01.2024.
-//
-
 #include "Disk.h"
 
 Disk::Disk(int size, SDL_Color color) : size(size), color(color) {}
 
-int Disk::getSize() const {
-    return size;
-}
+int Disk::getSize() const { return size; }
 
-SDL_Color Disk::getColor() const {
-    return color;
-}
+SDL_Color Disk::getColor() const { return color; }
 
-bool Disk::operator==(const Disk &other) const {
-    return size == other.size;
-}
+bool Disk::operator==(const Disk &other) const { return size == other.size; }

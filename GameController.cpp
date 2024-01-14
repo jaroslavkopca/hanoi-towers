@@ -12,10 +12,16 @@ GameController::GameController(Game &game, GameView &view)
 void GameController::run() {
 }
 
+
+
 void GameController::handleUserInput(SDL_Event &e) {
     int x, y;
     SDL_GetMouseState(&x, &y);
 
+    // If the game is currently solving, ignore all button clicks
+    if (e.type == SDL_MOUSEBUTTONDOWN && game.isSolvingGame()) {
+        return;
+    }
 
     if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT && !gameView.isDiskGrabbed &&
         game.isGameStarted()) {
@@ -29,7 +35,6 @@ void GameController::handleUserInput(SDL_Event &e) {
             std::cout << "Tower first  :  " << gameView.grabbedTower << std::endl;
         }
     }
-
 
     if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_LEFT && gameView.isDiskGrabbed &&
         game.isGameStarted()) {
@@ -54,7 +59,7 @@ void GameController::handleUserInput(SDL_Event &e) {
             return;
         };
         GameView::ButtonType clickedButton = gameView.getButtonClicked(x, y);
-        if (clickedButton != GameView::NUM_BUTTONS && !game.isSolvingGame()) {
+        if (clickedButton != GameView::NUM_BUTTONS) {
             switch (clickedButton) {
                 case GameView::RESTART:
                     restartGame();
@@ -91,6 +96,7 @@ void GameController::handleUserInput(SDL_Event &e) {
 }
 
 
+
 bool GameController::moveDisk(int fromTower, int toTower) {
     // Implement the logic to move a disk from one tower to another
     if (game.isValidMove(fromTower, toTower)) {
@@ -104,6 +110,7 @@ bool GameController::moveDisk(int fromTower, int toTower) {
 void GameController::restartGame() {
     game.resetGame();
 }
+
 
 void GameController::solveGame(int numberOfDisks, int sourceTower, int destinationTower, int auxiliaryTower) {
     if (!game.isSolvingGame()) { return; }

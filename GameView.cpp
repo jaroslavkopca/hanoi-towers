@@ -8,21 +8,32 @@
 #include <SDL_ttf.h>
 
 GameView::GameView(Game &game) : game(game) {
-    // Initialize SDL and create window and renderer
+    initializeSDL();
+    initializeTTF();
+    initializeWindowAndRenderer();
+}
+
+void GameView::initializeSDL() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-    } else {
-        window = SDL_CreateWindow("Tower of Hanoi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600,
-                                  SDL_WINDOW_SHOWN);
-        if (!window) {
-            std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        } else {
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-            render();
-            if (!renderer) {
-                std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-            }
-        }
+        return;
+    }
+}
+
+void GameView::initializeTTF() {
+    if (TTF_Init() == -1) {
+        std::cerr << "SDL_ttf could not initialize! TTF_Error: " << TTF_GetError() << std::endl;
+    }
+}
+
+void GameView::initializeWindowAndRenderer() {
+    window = SDL_CreateWindow("Tower of Hanoi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600,
+                              SDL_WINDOW_SHOWN);
+    if (!window) {
+        return;
+    }
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        return;
     }
 }
 
@@ -98,6 +109,7 @@ void GameView::renderDiskWhenGrabbed() {
 }
 
 
+
 void GameView::render() {
     if (renderer) {
         if (SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255) < 0) {
@@ -123,6 +135,7 @@ void GameView::render() {
         SDL_RenderPresent(renderer);
     }
 }
+
 
 
 void GameView::renderText(SDL_Renderer *renderer, const char *text, SDL_Color textColor, SDL_Rect position) {
@@ -162,6 +175,7 @@ void GameView::renderText(SDL_Renderer *renderer, const char *text, SDL_Color te
 }
 
 
+
 void GameView::renderTextAndUI() {
     SDL_Color textColor = {200, 200, 200}; // Light grey for visibility against the dark background
 
@@ -180,8 +194,8 @@ void GameView::renderTextAndUI() {
 }
 
 
+
 void GameView::renderStartScreen() {
-    SDL_Init(TTF_Init());
     SDL_RenderClear(renderer);
 
     // Create a "Start" button
@@ -280,11 +294,8 @@ void GameView::initializeButtons() {
     buttons[DECREASE_DISKS] = {xPos - buttonWidth * 2 - 20, yPos, buttonWidth, buttonHeight}; // Down button
     buttons[EXIT] = {650, 500, buttonWidth, buttonHeight}; // Exit button
 
-    SDL_Init(TTF_Init());
-    // Initialize SDL_ttf for text rendering
-    if (TTF_Init() == -1) {
-        std::cerr << "SDL_ttf could not initialize! TTF_Error: " << TTF_GetError() << std::endl;
-    }
+
+
 
     // Load font
     TTF_Font *font = TTF_OpenFont("fonts/Pixellettersfull.ttf", 24);
